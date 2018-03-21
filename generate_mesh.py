@@ -21,3 +21,4 @@ def generate_mesh(layer_outer_radii,nodes_per_layer):
       single_material_nodes=np.linspace(layer_outer_radii[i-1],layer_outer_radii[i],nodes_per_layer[i-1])
       mesh[nodes_sum:nodes_sum_new]=single_material_nodes
       nodes_sum=nodes_sum_new
+   return mesh
