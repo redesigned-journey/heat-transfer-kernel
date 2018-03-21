@@ -10,3 +10,48 @@ This project will aim to remain relatively simple in terms of modeling complexit
 
 Initially material properties will be considered constant with respect to position and temperature, with the intent to allow expansion to temperature dependent properties further along in the project. Heat generation at the particle scale will be uniform within the fueled region. At the pebble scale heat generation will be considered homogenous throughout the pebble. 
 
+* Read input
+
+* Solve physics
+
+  * Setup problem
+  
+    * [Build mesh][i20]
+    * [Define material properties][i21]
+    * [Define time array][i22]
+    
+  * loop over time steps
+  
+    * Define boundary conditions 
+    * Build matrix (Ax = B)
+    
+      * [Build  matrix A][i17]
+      
+        * Call material property (T,&alpha;)
+        * Call BC/IC
+        
+      * [Build  matrix B][i18]
+      * Call material property (T,&alpha;)
+      * Call BC/IC
+      
+  * Solve matrix equation A.x=b)
+  
+    * [Matrix solver function][i19]
+    
+  * Update time step
+  
+* Write output
+
+  * [Generate plot from array data][i23]
+  
+  
+  
+[i20]: https://github.com/THETA476/THETA/issues/20
+[i21]: https://github.com/THETA476/THETA/issues/21
+[i22]: https://github.com/THETA476/THETA/issues/22
+[i17]: https://github.com/THETA476/THETA/issues/17
+[i18]: https://github.com/THETA476/THETA/issues/18
+[i19]: https://github.com/THETA476/THETA/issues/19
+[i23]: https://github.com/THETA476/THETA/issues/23  
+  
+  
