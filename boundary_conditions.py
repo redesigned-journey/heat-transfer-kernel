@@ -16,6 +16,6 @@ def boundary_conditions(layer_outer_radii, boundary_temp):
 
     particle_outer_radius = layer_outer_radii[-1]
 
-    boundary_condition = [particle_outer_radius,temperature]
+    boundary_condition = [particle_outer_radius, temperature]
 
     return boundary_condition
