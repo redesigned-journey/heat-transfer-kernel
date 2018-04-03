@@ -12,7 +12,7 @@ def boundary_conditions(layer_outer_radii, boundary_temp):
     -boundary_condition: list of outer radius and temperature
     """
 
-    temperature = 1800 "Room Temperature"
+    temperature = 1800 "Realistic Temperature"
 
     particle_outer_radius = layer_outer_radii[-1]
 
