@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def build_matrix_b(boundary_conditions,mesh,material_property_library):
+def build_matrix_b(boundary_conditions,mesh,material_property_library,materials):
     """ This function will generate the vector of constants (b) used in solving the equation A.x=b. 
 	It will be relatively straightforward for the steady state case, but we are unsure how transients will affect this function.
 
@@ -15,9 +15,9 @@ def build_matrix_b(boundary_conditions,mesh,material_property_library):
     numpy array containing the matrix used in solving the equation A.x=b
     """
 	
-    k =   material_property_library['k']
-    rho = material_property_library['rho'] 
-    c =   material_property_library['c']
+    k = material_property_library[materials[0][0]]['k']
+    rho = material_property_library[materials[0][0]]['rho']
+    c = material_property_library[materials[0][0]]['c']
     g_dot = 1.1*10**10
     "g_dot should probably be passed into the function so it can be varied with time" 
     
