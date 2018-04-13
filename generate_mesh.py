@@ -23,18 +23,5 @@ def generate_mesh(layer_outer_radii, nodes_per_layer, materials):
     mesh = list()
     for i in range(1, len(materials)+1):
         mesh_points = np.linspace(layer_outer_radii[i-1], layer_outer_radii[i], nodes_per_layer[i-1])
-        mesh.append((materials[i-1], mesh_points)) 
-        
-        
-        
-        
-        
-        
-    """for i in range(1, len(layer_outer_radii)):
-        nodes_sum_new = nodes_sum+nodes_per_layer[i-1]
-        single_material_nodes = np.linspace(layer_outer_radii[i-1],
-                                            layer_outer_radii[i],
-                                            nodes_per_layer[i-1])
-        mesh[nodes_sum:nodes_sum_new] = single_material_nodes
-        nodes_sum = nodes_sum_new"""
+        mesh.append((materials[i-1], mesh_points))
     return mesh
