@@ -1,5 +1,7 @@
 import numpy as np
 import pytest
+from random import randint
+import numpy.linalg as linalg
 import sys
 sys.path.insert(0, '../src')
 from matrix_solver import solve_matrix as sm
@@ -36,3 +38,22 @@ def test_output_3():
 
     assert np.allclose(sm(A, b), np.array([[2], [4], [-3]]))
 
+
+def test_output_4():
+
+    N = randint(1,20)
+    A = np.random.rand(N,N)
+    x = np.ones((N,1))
+
+    b = np.dot(A,x)
+
+
+    assert np.allclose(sm(A, b), x)
+
+def test_singular():
+
+    N = randint(1,20)
+    A = np.arange(N**2).reshape((N,N))
+    b = np.ones((N,1))
+
+    assert sm(A, b) == False
