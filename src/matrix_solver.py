@@ -12,8 +12,14 @@ def solve_matrix(A, b):
     """
 
     import numpy as np
-    from numpy.linalg import solve
+    #from numpy.linalg import solve
+    import numpy.linalg as linalg
 
-    temperature_array = solve(A, b)
+    try:
+        i = np.linalg.inv(A)
+        temperature_array = linalg.solve(A, b)
 
-    return temperature_array
+        return temperature_array
+    except np.linalg.LinAlgError as err:
+        #print("Matrix A is singular")
+        return False
