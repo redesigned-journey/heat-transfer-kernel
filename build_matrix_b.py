@@ -21,18 +21,15 @@ def build_matrix_b(boundary_conditions,mesh,material_property_library):
     g_dot = 1.1*10**10
     "g_dot should probably be passed into the function so it can be varied with time" 
     
-    total_nodes = 0
-    for i in range(len(mesh)):
-        total_nodes += len(mesh[i][1])
+    total_nodes = len(mesh[0][1])
+    for i in range(1,len(mesh)):
+        total_nodes += len(mesh[i][1])-1
     N = len(mesh)
     b = np.zeros(total_nodes)
     
-    i = 0
-    while mesh[i][0] == fuel_material:
+    for i in range(len(mesh[0][1])-1):
         b[i] = -g_dot
-        i += 1
-    b[i+1] = 0
-    b[i+1] = boundary_conditions
+    b[total_nodes-1] = boundary_conditions
 
     return b
 
