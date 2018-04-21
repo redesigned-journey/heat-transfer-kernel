@@ -78,7 +78,7 @@ def build_matrix_A(material_property_library, mesh):
                                         1/(1/mesh[mat][1][j-1]-1/mesh[mat][1][j]))
             A[j+i+1, j-1+i+1] = k[mat]*4*np.pi/volume[j+i+1]*(1/(1/mesh[mat][1][j-1]-1/mesh[mat][1][j]))
             A[j+i+1, j+1+i+1] = k[mat]*4*np.pi/volume[j+i+1]*(1/(1/mesh[mat][1][j]-1/mesh[mat][1][j+1]))
-        i+=j
+        i+=j+1
 
     A[total_nodes-1,total_nodes-1] = 1
 
