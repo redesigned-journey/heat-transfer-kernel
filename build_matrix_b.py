@@ -24,10 +24,9 @@ def build_matrix_b(boundary_conditions,mesh,material_property_library):
     total_nodes = len(mesh[0][1])
     for i in range(1,len(mesh)):
         total_nodes += len(mesh[i][1])-1
-    N = len(mesh)
     b = np.zeros(total_nodes)
-    
-    for i in range(len(mesh[0][1])-1):
+    #for i in range(len(mesh[0][1])):
+    for i in range(total_nodes-1):
         b[i] = -g_dot
     b[total_nodes-1] = boundary_conditions
 
