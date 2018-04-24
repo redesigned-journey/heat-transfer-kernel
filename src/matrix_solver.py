@@ -1,3 +1,7 @@
+import sys
+import numpy.linalg as linalg
+
+
 def solve_matrix(A, b):
     """ This will call the built in matrix solving utility in numpy and solve
     the matrix equation A.x=b for x.
@@ -11,13 +15,6 @@ def solve_matrix(A, b):
     - temperature_array: The value of temperatures at each node at a given time
     """
 
-    import numpy as np
-    import numpy.linalg as linalg
+    temperature_array = linalg.solve(A, b)
 
-    try:
-        i = np.linalg.inv(A)
-        temperature_array = linalg.solve(A, b)
-
-        return temperature_array
-    except np.linalg.LinAlgError as err:
-        return False
+    return temperature_array

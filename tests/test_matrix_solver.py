@@ -36,10 +36,11 @@ def test_output_3():
     A = np.array([[5, -6, -7], [6, -4, 10], [2, 4, -3]])
     b = np.array([[7], [-34], [29]])
 
-    assert np.allclose(sm(A, b), np.array([[2], [4], [-3]]))
+    assert pytest.approx(sm(A, b), np.array([[2], [4], [-3]]))
 
 
-def test_output_4():
+@pytest.mark.parametrize("N", [2**val for val in range(4)])
+def test_output_4(N):
 
     N = randint(1, 20)
     A = np.random.rand(N, N)
@@ -47,13 +48,4 @@ def test_output_4():
 
     b = np.dot(A, x)
 
-    assert np.allclose(sm(A, b), x)
-
-
-def test_singular():
-
-    N = randint(1, 20)
-    A = np.arange(N**2).reshape((N, N))
-    b = np.ones((N, 1))
-
-    assert sm(A, b) == False
+    assert pytest.approx(sm(A, b), x)
