@@ -1,7 +1,6 @@
 import numpy as np
 import pytest
 from random import randint
-import numpy.linalg as linalg
 import sys
 sys.path.insert(0, '../src')
 from matrix_solver import solve_matrix as sm
