@@ -70,7 +70,8 @@ def build_matrix_A(material_property_library, mesh):
                                                     -1/mesh[mat-1][1][prev_mesh_length-1]))-(
                                                     k[mat]*4*np.pi/(rho[mat]*c[mat])/volume[i+1]*(1/(1/mesh[mat][1][0]
                                                     -1/mesh[mat][1][1])))
-        A[i+1, i] = k[mat-1]*4*np.pi/(rho[mat-1]*c[mat-1])/volume[i+1]*(1/(1/mesh[mat-1][1][prev_mesh_length-2]-1/mesh[mat-1][1][prev_mesh_length-1]))
+        A[i+1, i] = k[mat-1]*4*np.pi/(rho[mat-1]*c[mat-1])/volume[i+1]*(1/(1/mesh[mat-1][1][prev_mesh_length-2]-
+                                                                        1/mesh[mat-1][1][prev_mesh_length-1]))
 	
         for j in range(1, len(mesh[mat][1])-1): 
             volume[j+i+1] = 4/3*np.pi*((mesh[1][1][j]+DR[mat]/2)**3-(mesh[mat][1][j]-DR[mat]/2)**3)
