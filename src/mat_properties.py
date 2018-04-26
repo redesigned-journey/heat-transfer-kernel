@@ -18,4 +18,4 @@ material_property_library: dictionary containing the material properties for eac
                                  'materials[4]': {'rho': materials_dict_master['material[4]']['rho'], 'k': materials_dict_master['material[4]']['k'], 'c': materials_dict_master['material[4]']['c'] },
     
 
-    return mat_properties
+    return material_property_library
