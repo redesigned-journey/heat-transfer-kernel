@@ -21,7 +21,7 @@ def generate_mesh(layer_outer_radii, nodes_per_layer, materials):
     - mesh : a list of tuples, each tuple is composed of the material and nodes associated with that material
     """
     mesh = list()
-    for i in range(1, len(materials)+1):
+    for i in range(len(materials)+1):
         mesh_points = np.linspace(layer_outer_radii[i-1], layer_outer_radii[i], nodes_per_layer[i-1])
         mesh.append((materials[i-1], mesh_points))
     return mesh
