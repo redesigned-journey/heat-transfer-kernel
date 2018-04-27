@@ -1,5 +1,5 @@
 import numpy as np
-
+import sys
 
 def generate_mesh(layer_outer_radii, nodes_per_layer, materials):
     """ This function generates an array of grid points in the radial direction,
@@ -21,7 +21,7 @@ def generate_mesh(layer_outer_radii, nodes_per_layer, materials):
     - mesh : a list of tuples, each tuple is composed of the material and nodes associated with that material
     """
     mesh = list()
-    for i in range(len(materials)+1):
-        mesh_points = np.linspace(layer_outer_radii[i-1], layer_outer_radii[i], nodes_per_layer[i-1])
-        mesh.append((materials[i-1], mesh_points))
+    for i in range(len(materials)):
+        mesh_points = np.linspace(layer_outer_radii[i], layer_outer_radii[i+1], nodes_per_layer[i])
+        mesh.append((materials[i], mesh_points))
     return mesh

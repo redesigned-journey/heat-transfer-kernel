@@ -1,7 +1,8 @@
 import numpy as np
 import pytest
-
-from ..src.generate_mesh import generate_mesh
+import sys
+sys.path.insert(0, './src')
+from generate_mesh import generate_mesh
 
 def test_generic():
     materials = ['Vibranium']
