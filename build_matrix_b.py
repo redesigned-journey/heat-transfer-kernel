@@ -32,7 +32,7 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
         total_nodes += len(mesh[i][1])-1
     b = np.zeros(total_nodes)
     for i in range(len(mesh[0][1])):
-        b[i] = -g_dot*Dt/(rho[0]*c[0])
+        b[i] = g_dot*Dt/(rho[0]*c[0])
     b[total_nodes-1] = boundary_conditions
 
     return b
