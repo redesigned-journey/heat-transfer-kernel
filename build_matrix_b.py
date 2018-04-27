@@ -21,7 +21,10 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
         k[m] += material_property_library[mesh[m][0]]['k']
         rho[m] += material_property_library[mesh[m][0]]['rho']
         c[m] += material_property_library[mesh[m][0]]['c']
-    Dt = time[1]-time[0]
+    if len(time) > 1:
+    	Dt = time[1] - time[0]
+    else:
+    	Dt = 1
 
     
     total_nodes = len(mesh[0][1])

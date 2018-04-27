@@ -21,7 +21,10 @@ def build_matrix_A(material_property_library, mesh, time):
     rho = np.zeros(len(mesh))
     c = np.zeros(len(mesh))
     DR = np.zeros(len(mesh))
-    Dt = time[1] - time[0]
+    if len(time) > 1:
+    	Dt = time[1] - time[0]
+    else:
+    	Dt = 1
     for m in range(len(mesh)):
         k[m] = material_property_library[mesh[m][0]]['k']
         rho[m] = material_property_library[mesh[m][0]]['rho']
