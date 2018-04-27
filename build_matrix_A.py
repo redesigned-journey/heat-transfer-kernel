@@ -13,9 +13,10 @@ def build_matrix_A(material_property_library, mesh, time):
     - mesh: the physical location of each mesh point
     - materials: the materials in each region and how many nodes are assigned to that material
     outputs. List of tuples of format (material, number of nodes)
+    - time: An array of timesteps taken during transients. If steady state, supply 0.
     --------
     - An array that can be plugged into a subsequent function to solve the
-    A.x=b formula
+      A.x=b formula
     """
     k = np.zeros(len(mesh))
     rho = np.zeros(len(mesh))
