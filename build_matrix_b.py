@@ -1,4 +1,5 @@
 import numpy as np
+from property_list_builder import property_list_builder
 
 
 def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, time):
@@ -16,13 +17,7 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
     outputs
     - b: numpy array containing the matrix used in solving the equation A.x=b
     """
-    k = np.zeros(len(mesh))
-    rho = np.zeros(len(mesh))
-    c = np.zeros(len(mesh))
-    for m in range(len(mesh)):
-        k[m] += material_property_library[mesh[m][0]]['k']
-        rho[m] += material_property_library[mesh[m][0]]['rho']
-        c[m] += material_property_library[mesh[m][0]]['c']
+    k, rho, c, DR = property_list_builder(material_property_library, mesh)
     if len(time) > 1:
     	Dt = time[1] - time[0]
     else:
@@ -30,12 +25,14 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
 
     
     total_nodes = len(mesh[0][1])
+    fuel_nodes = len(mesh[0][1])
     for i in range(1,len(mesh)):
         total_nodes += len(mesh[i][1])-1
     b = np.zeros(total_nodes)
-    for i in range(len(mesh[0][1])):
-        b[i] = g_dot*Dt/(rho[0]*c[0])
-    b[total_nodes-1] = boundary_conditions
+    
+    b[1:fuel_nodes] = g_dot*Dt/(rho[0]*c[0])
+    
+    b[-1] = boundary_conditions
 
     return b
 

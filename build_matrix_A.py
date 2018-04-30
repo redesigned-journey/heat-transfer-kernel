@@ -1,4 +1,5 @@
 import numpy as np
+from property_list_builder import property_list_builder
 
 
 def build_matrix_A(material_property_library, mesh, time):
@@ -11,28 +12,19 @@ def build_matrix_A(material_property_library, mesh, time):
     containing all of the important data for each material (fuel,
     various layers of graphite)
     - mesh: the physical location of each mesh point
-    - materials: the materials in each region and how many nodes are assigned to that material
-    outputs. List of tuples of format (material, number of nodes)
     - time: An array of timesteps taken during transients. If steady state, supply 0.
     --------
     - An array that can be plugged into a subsequent function to solve the
       A.x=b formula
     """
-    k = np.zeros(len(mesh))
-    rho = np.zeros(len(mesh))
-    c = np.zeros(len(mesh))
-    DR = np.zeros(len(mesh))
+   
     if len(time) > 1:
     	Dt = time[1] - time[0]
     else:
     	Dt = 1
-    for m in range(len(mesh)):
-        k[m] = material_property_library[mesh[m][0]]['k']
-        rho[m] = material_property_library[mesh[m][0]]['rho']
-        c[m] = material_property_library[mesh[m][0]]['c']
-        DR[m] = mesh[m][1][1]-mesh[m][1][0]
-
-
+    
+    k, rho, c, DR = property_list_builder(material_property_library, mesh)
+    
     total_nodes = len(mesh[0][1])
     for i in range(1, len(mesh)):
         total_nodes += len(mesh[i][1])-1
@@ -83,9 +75,11 @@ def build_matrix_A(material_property_library, mesh, time):
                                         1/(1/mesh[mat][1][j-1]-1/mesh[mat][1][j]))
             A[j+i+1, j-1+i+1] = -k[mat]*Dt*4*np.pi/(rho[mat]*c[mat])/volume[j+i+1]*(1/(1/mesh[mat][1][j-1]-1/mesh[mat][1][j]))
             A[j+i+1, j+1+i+1] = -k[mat]*Dt*4*np.pi/(rho[mat]*c[mat])/volume[j+i+1]*(1/(1/mesh[mat][1][j]-1/mesh[mat][1][j+1]))
-        i+=j+1
+        i+=len(mesh[mat][1])-1
 
     A[total_nodes-1, total_nodes-1] = 1
 
 
     return A
+
+
