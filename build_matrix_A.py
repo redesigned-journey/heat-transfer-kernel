@@ -38,14 +38,13 @@ def build_matrix_A(material_property_library, mesh, time):
     volume[1] = 4/3*np.pi*(mesh[0][1][1]+DR[0]/2)**3-(mesh[0][1][1]-DR[0]/2)**3
     
     A[0, 0] = k[0]*Dt*4*np.pi/(rho[0]*c[0])/(DR[0]*volume[0])*(DR[0]/2)**2
-    A[0, 1] = -k[0]*Dt*4*np.pi/(rho[0]*c[0])/(DR[0]*volume[0])*(DR[0]/2)**2
+    A[0, 1] = -A[0,0]
 	
 
-    A[1, 1] = k[0]*Dt*4*np.pi/(rho[0]*c[0])/volume[1]*(1/(1/mesh[0][1][1]-1/mesh[0][1][2]) +
-                                    1/DR[0]*(mesh[0][1][0]+DR[0]/2)**2)
+    
     A[1, 0] = -k[0]*Dt*4*np.pi/(rho[0]*c[0])/(DR[0]*volume[1])*(mesh[0][1][0]+DR[0]/2)**2
     A[1, 2] = -k[0]*Dt*4*np.pi/(rho[0]*c[0])/volume[1]*(1/(1/mesh[0][1][1]-1/mesh[0][1][2]))
-	
+    A[1, 1] = -(A[1,0] +A[1,2])
 
 	
     for i in range(2, len(mesh[0][1])-1): #Length set to fueled node length

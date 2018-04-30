@@ -30,7 +30,7 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
         total_nodes += len(mesh[i][1])-1
     b = np.zeros(total_nodes)
     
-    b[1:fuel_nodes] = g_dot*Dt/(rho[0]*c[0])
+    b[0:fuel_nodes] = g_dot*Dt/(rho[0]*c[0])
     
     b[-1] = boundary_conditions
 
