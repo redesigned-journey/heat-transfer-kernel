@@ -15,8 +15,8 @@ def test_generate_mesh():
 def test_generate_mesh_2():
     simulation_length = 15.7
     num_steps = 20
-    expected = np.zeros(num_steps - 1)
-    for i in range(len(expected) - 1):
+    expected = np.zeros(num_steps)
+    for i in range(len(expected)):
         expected[i] = simulation_length/(num_steps - 1)*i
-    assert pytest.approx(expected == generate_timesteps(simulation_length, num_steps))
+    assert pytest.approx(expected) == generate_timesteps(simulation_length, num_steps)
 
