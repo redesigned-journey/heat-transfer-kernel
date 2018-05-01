@@ -30,7 +30,18 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
         total_nodes += len(mesh[i][1])-1
     b = np.zeros(total_nodes)
     
-    b[0:fuel_nodes] = g_dot*Dt/(rho[0]*c[0])
+    b[0:fuel_nodes-1] = g_dot*Dt/(rho[0]*c[0])
+    
+    #Boundary between fuel and first non-fuel material has to be handled specially
+    prev_mesh_length = len(mesh[0][1])
+    volume = 4/3*np.pi*((mesh[0][1][prev_mesh_length-1]+DR[0]/2)**3-(
+                                                 mesh[0][1][prev_mesh_length-1]-DR[0]/2)**3)
+    volume_pre_node = 4/3*np.pi*(mesh[0][1][prev_mesh_length-1]+DR[1]/2)**3
+    volume_post_node = 4/3*np.pi*(mesh[0][1][prev_mesh_length-1]-DR[0]/2)**3
+    
+    rho_c_weighted = (volume_pre_node*rho[0]*c[0]+volume_post_node*rho[1]*c[1])/volume
+        
+    b[fuel_nodes] = g_dot*Dt/rho_c_weighted
     
     b[-1] = boundary_conditions
 
