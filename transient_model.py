@@ -53,7 +53,7 @@ def transient_model(time, material_property_library, mesh, g_dot_list, boundary_
     for i in range(1,len(time)):
         b = b_temp.copy() 
         b += np.add(b, T[:,i-1])
-        #The following line removes the addition 
+        #The following line removes the addition of T to the boundary condition
         b[-1] += -T[-1,i-1]
         
         T[:,i] = solve_matrix(A, b)
