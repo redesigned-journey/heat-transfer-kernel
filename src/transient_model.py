@@ -50,11 +50,11 @@ def transient_model(time, material_property_library, mesh, g_dot_list, boundary_
     T[:,0] = T_initial
 
     
-    b_temp = build_matrix_b(boundary_conditions_list[1], mesh, material_property_library, g_dot_list[1], time)    
+    b_temp = Dt*build_matrix_b(boundary_conditions_list[1], mesh, material_property_library, g_dot_list[1])    
     
     for i in range(1,len(time)):
         b = b_temp.copy() 
-        b += np.add(b, T[:,i-1])
+        b = np.add(b, T[:,i-1])
         #The following line removes the addition of T to the boundary condition
         b[-1] += -T[-1,i-1]
         
