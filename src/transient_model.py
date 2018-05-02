@@ -32,7 +32,7 @@ def transient_model(time, material_property_library, mesh, g_dot_list, boundary_
     for i in range(1,len(mesh)):
         total_nodes += len(mesh[i][1])-1
     T = np.zeros((total_nodes, len(time)))
-	 Dt = time[1]-time[0]    
+    Dt = time[1]-time[0]    
     
     A = Dt*build_matrix_A(material_property_library, mesh)
     b = Dt*build_matrix_b(boundary_conditions_list[0], mesh, material_property_library, g_dot_list[0]) 
