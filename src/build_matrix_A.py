@@ -13,7 +13,6 @@ def build_matrix_A(material_property_library, mesh):
     containing all of the important data for each material (fuel,
     various layers of graphite)
     - mesh: the physical location of each mesh point
-    - time: An array of timesteps taken during transients. If steady state, supply 0.
     --------
     - An array that can be plugged into a subsequent function to solve the
       A.x=b formula

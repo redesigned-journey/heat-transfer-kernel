@@ -13,8 +13,8 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot):
     - mesh: the array of points for the physical location of nodes and the materials assigned to them
     - material_property_library: a dictionary or nested dictionaries of the materials used in the modeled region
     - g_dot: The internal heat generation rate of the fuel (central region)
-    - time: An array of the time steps taken during transients. If steady state, supply 0
-    outputs
+    outputs:
+    	-------
     - b: numpy array containing the matrix used in solving the equation A.x=b
     """
     k, rho, c, DR = property_list_builder(material_property_library, mesh)
