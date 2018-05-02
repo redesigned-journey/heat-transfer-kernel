@@ -2,7 +2,7 @@ import numpy as np
 from property_list_builder import property_list_builder
 
 
-def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, time):
+def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot):
     """ This function will generate the vector of constants (b) used in solving the equation A.x=b. 
 	It will be relatively straightforward for the steady state case, but we are unsure how transients will affect this function.
 
@@ -18,10 +18,7 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
     - b: numpy array containing the matrix used in solving the equation A.x=b
     """
     k, rho, c, DR = property_list_builder(material_property_library, mesh)
-    if len(time) > 1:
-    	Dt = time[1] - time[0]
-    else:
-    	Dt = 1
+  
 
     
     total_nodes = len(mesh[0][1])
@@ -41,7 +38,7 @@ def build_matrix_b(boundary_conditions, mesh, material_property_library, g_dot, 
     
     rho_c_weighted = (volume_pre_node*rho[0]*c[0]+volume_post_node*rho[1]*c[1])/volume
         
-    b[fuel_nodes] = g_dot*Dt/rho_c_weighted
+    b[fuel_nodes] = g_dot/rho_c_weighted
     
     b[-1] = boundary_conditions
 
