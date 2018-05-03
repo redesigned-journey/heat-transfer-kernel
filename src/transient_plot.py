@@ -6,7 +6,7 @@ def transient_plot(T_mat, mesh):
     
     imputs
     ------
-    - T: The 2D matrix from the output of the transient_model function
+    - T_mat: The 2D matrix from the output of the transient_model function
     - mesh: mesh: the array of points for the physical location of nodes and the materials assigned to them
     
     output
@@ -24,8 +24,8 @@ def transient_plot(T_mat, mesh):
     mesh_radii_ordered = sorted(mesh_radii_set, key=float)    
            
      
-               
-    
+    fig = plt.figure()
+    fig.suptitle('Transient Model')              
     for i in range(0, len(T_mat[0,:])):
         plt.plot(mesh_radii_ordered, T_mat[:,i])
         
