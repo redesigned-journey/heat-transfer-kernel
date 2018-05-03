@@ -4,42 +4,103 @@ import material_properties
 
 import generate_mesh
 
-# Allow for user input for number of materials and what kind of materials
+import build_matrix_A
+
+import build_matrix_b
+
+import boundary_conditions
+
+import matrix_solver
+
+import plotting_func
+
+
+# Allow for user input for material information and layers per node
 
 parser = argparse.ArgumentParser()
-    
-parser.add_argument("-n", "--number_materials", type=int, default=3, required=False,
-                           help="Determines how many materials are in the particle")
+
+parser.add_argument("-f", "--fuel", type=str, default='UO2', required=False,
+	               choices=material_properties.fuel_props_master.keys(),
+	               help="Determine the type of fuel used in the particle")
+
+parser.add_argument("-c", "--clad", nargs='+', default=['Inner Pyrolytic Carbon', 'Silicon Carbide'] ,
+	                choices=material_properties.cladding_props_master.keys(),
+	                required=False, 
+	                help="Determine the cladding materials, enter each material in quotes starting closest to fuel")
+
+parser.add_argument("-rf", "--fuel_radius", type=float, default = 250E-6, required=False,
+	                help="Determine the fuel radius")
 
 
-parser.add_argument("-f", "--fuel", type=list(tuple), default=[('UO2',250e-6)], required=False,
-	               choices=[('UO2',250e-6),('UF4',250e-6)],
-	               help="Determine the type of fuel used in the particle and its radius")
+parser.add_argument("-ct", "--clad_radii", nargs='+', default = [280E-06 , 315E-06],
+	                help='Determines the cladding radii')
 
-parser.add_argument("-c", "--clad", type=list(tuple), default=[('Inner Pyrolytic Carbon', 35e-6) , ('Silicon Carbide', 35e-6)],
-	                required=False, help="Determine the cladding materials and their thickness. List starts closest to fuel ")
+parser.add_argument("-ln", "--layers_per_node", nargs='+', default=[5,4,3],
+	                help='Determines the layers_per_node')
+
+parser.add_argument("-tr","--transient", nargs='+', default=[],required=False,
+	                help="Runs transient model. Enter simulation time and then timestep seperated by a space")
+
+parser.add_argument("-bt", "--boundary_temp", type=float, default=1800.00,
+	                help="Determines the temperature boundary condition at the outside of the particle")
+
+parser.add_argument("-gd", "--g_dot", type=float, default=1.1E10,
+	                help="Determines the generation in the fuel")
+
+
 
 
 
     
 args = parser.parse_args()
     
-num_materials = args.number_materials
-fuel_type = args.fuel
-order_materials = (fuel_type[0]0)
+layers_per_node=args.layers_per_node
 
-cladding_list=args.clad
+# Generate nested dictionary containing the materials, their radii, and their position in the particle
 
-order_materials = [fuel_type[0][0]]
-for i in range(len(cladding_list)):
-    order_materials += [cladding_list[i][0]]
+material_info={}
+material_info[args.fuel]={'Radius' : args.fuel_radius, 'Position' : 0}
 
-assert len(cladding_list) == num_materials - 1, "The number of cladding materials specified does not match number of materials in particle"
+for i in range(len(args.clad)):
+    material_info[args.clad[i]]={'Radius' : args.clad_radii[i], 'Position' : i+1}
 
 
-# Generate the material property library
+material_props = material_properties.material_property_library(material_info)
 
-material_props = material_properties.material_property_library(fuel_type,cladding_list)
+
+mesh = generate_mesh.generate_mesh(material_props,layers_per_node)
+
+print(mesh)
+
+boundary_condition = boundary_conditions.boundary_conditions(args.clad_radii[-1], args.boundary_temp)
+
+
+
+# Run steady state model
+
+if len(args.transient) == 0:
+    A = build_matrix_A.build_matrix_A(material_props, mesh)
+    b = build_matrix_b.build_matrix_b(boundary_condition[1], mesh, material_props, args.g_dot)
+
+    temperature_array = matrix_solver.solve_matrix(A,b)
+
+#    print(temperature_array)
+
+plotting_func.temperature_plot(temperature_array, mesh)
+
+#elif len(args.t)
+
+
+
+	
+
+
+
+
+
+
+
+
 
 
 
