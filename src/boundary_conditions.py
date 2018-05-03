@@ -1,9 +1,9 @@
-def boundary_conditions(layer_outer_radii, boundary_temp):
+def boundary_conditions(particle_outer_radius, boundary_temp):
     """ This function defines the temperature on the outer radius of the particle
 
     Inputs
     --------
-    -layer_outer_radii: calls on layer_outer_radii for the last point
+    -particle_outer_radius: Outer radius of particle
 
     -boundary_temp: User input of the temperature at the outer radius [K]
 
@@ -12,10 +12,7 @@ def boundary_conditions(layer_outer_radii, boundary_temp):
     -boundary_condition: list of outer radius and temperature
     """
 
-    temperature = 1800 # Realistic Temperature
-
-    particle_outer_radius = layer_outer_radii[-1]
-
-    boundary_condition = [particle_outer_radius, temperature]
+    boundary_condition = [particle_outer_radius, boundary_temp]
 
     return boundary_condition
+
