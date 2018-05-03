@@ -12,7 +12,9 @@ import boundary_conditions
 
 import matrix_solver
 
-import plotting_func
+import steady_state_plot
+
+import transient_plot
 
 import transient_model
 
@@ -52,7 +54,7 @@ parser.add_argument("-bt", "--boundary_temp", type=float, default=1800.00,
 parser.add_argument("-gd", "--g_dot", type=float, default=1.1E10,
 	                help="Determines the generation in the fuel")
 
-parser.add_argument("-tg","--transient_gen", nargs='+', type=float, default=[1.1E10,1800],required=False,
+parser.add_argument("-tg","--transient_gen", nargs='+', type=float, default=[1.1E10,1200],required=False,
 	                help="Runs transient model. Enter simulation time and then \
 	                number of timesteps seperated by a space")
 
@@ -97,10 +99,11 @@ if len(args.transient) == 0:
 
 #    print(temperature_array)
 
-    plotting_func.temperature_plot(temperature_array, mesh)
+    steady_state_plot.temperature_plot(temperature_array, mesh)
 
 elif len(args.transient) == 2:
 	time = generate_timesteps.generate_timesteps(args.transient[0],args.transient[1])
 	g_dot_list = [args.g_dot, args.transient_gen[0]]
 	temp_boundary_list = [args.boundary_temp,args.transient_gen[1]]
 	temperature_array = transient_model.transient_model(time, material_info, mesh, g_dot_list, temp_boundary_list)
+	transient_plot.transient_plot(temperature_array,mesh)
