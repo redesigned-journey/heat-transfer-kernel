@@ -22,7 +22,9 @@ def temperature_plot(temperature_array, mesh):
     
     mesh_radii_set = list(set(mesh_radii))
     mesh_radii_ordered = sorted(mesh_radii_set, key=float)     
-    
+        
+    fig = plt.figure()
+    fig.suptitle('Steady State Model')    
     plt.plot(mesh_radii_ordered, temperature_array)
     plt.xlabel('Radial Position (m)')
     plt.ylabel('Temperature (K)')
