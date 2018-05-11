@@ -15,3 +15,4 @@ def boundary_conditions(particle_outer_radius, boundary_temp):
     boundary_condition = [particle_outer_radius, boundary_temp]
 
     return boundary_condition
+
