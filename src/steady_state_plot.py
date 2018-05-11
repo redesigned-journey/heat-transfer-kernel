@@ -20,6 +20,7 @@ def temperature_plot(temperature_array, mesh):
         for node in element[1]:
             mesh_radii += [node]
 
+
     mesh_radii_set = list(set(mesh_radii))
     mesh_radii_ordered = sorted(mesh_radii_set, key=float)
 
